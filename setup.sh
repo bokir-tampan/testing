@@ -1,4 +1,16 @@
 #!/bin/bash
+# ==========================================
+# Color
+RED='\033[0;31m'
+NC='\033[0m'
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+ORANGE="\033[0;35m"
+LIGHT='\033[0;37m'
+# ==========================================
 dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 #########################
@@ -21,7 +33,7 @@ BURIQ () {
     rm -f  /root/tmp
 }
 # https://raw.githubusercontent.com/geovpn/perizinan/main/main/allow 
-MYIP=$(curl -sS ipv4.icanhazip.com)
+MYIP=$(curl -sS ipinfo.io/ip)
 Name=$(curl -sS https://raw.githubusercontent.com/geovpn/perizinan/main/main/allow | grep $MYIP | awk '{print $2}')
 echo $Name > /usr/local/etc/.$Name.ini
 CekOne=$(cat /usr/local/etc/.$Name.ini)
@@ -38,7 +50,7 @@ fi
 }
 
 PERMISSION () {
-    MYIP=$(curl -sS ipv4.icanhazip.com)
+    MYIP=$(curl -sS ipinfo.io/ip)
     IZIN=$(curl -sS https://raw.githubusercontent.com/geovpn/perizinan/main/main/allow | awk '{print $4}' | grep $MYIP)
     if [ "$MYIP" = "$IZIN" ]; then
     Bloman
@@ -172,113 +184,30 @@ exit 0
 fi
 
 sleep 3
-
-mkdir -p /var/lib/geovpnstore >/dev/null 2>&1
-echo "IP=" >> /var/lib/geovpnstore/ipvps.conf
-
-x="ok"
-while true $x != "ok"
-do
-echo -e "[ ${green}INFO${NC} ] Select core : " 
-echo -e "[ ${yell}*${NC} ] 1. V2RAY"
-echo -e "[ ${yell}*${NC} ] 2. XRAY"
-echo " =--------------="
-echo -ne "[ ${red}#${NC} ] Choice : "; read x
-case "$x" in
-   1)
-   coreselect="v2ray"
-   green "V2RAY Selected"
-   sleep 3
-   break
-   ;;
-   2)
-   coreselect="xray"
-   green "XRAY Selected"
-   sleep 3
-   break
-   ;;
-   *)
-   echo -e "\n\033[1;31mNot Valid!\033[0m"
-   sleep .1
-esac
-done
-
-if [ -f "/etc/$coreselect/domain" ]; then
-echo ""
-echo -e "[ ${green}INFO${NC} ] Script Already Installed"
-echo -ne "[ ${yell}WARNING${NC} ] Do you want to install again ? (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-rm setup.sh
-sleep 10
+#######################################################
+clear
+sudo hostnamectl set-hostname Geo-Project
+clear
+if [ -f "/etc/xray/domain" ]; then
+echo "Script Already Installed"
 exit 0
-else
-clear
 fi
-fi
-
-echo ""
-wget -q https://istriku.me/gratis/dependencies
-chmod +x dependencies 
-screen -S depen ./dependencies
-rm dependencies
-
-
-if [ -f "/etc/$coreselect/domain" ]; then
-clear
-echo ""
-domainbefore=`cat /etc/$coreselect/domain`
-echo -e "[ ${green}INFO${NC} ] Current domain : $domainbefore"
-echo -ne "[ ${yell}WARNING${NC} ] Do you want to change your domain before ? (y/n)? "
-read answer
-    if [ "$answer" == "${answer#[Yy]}" ] ;then
-        echo -ne
-        cp /etc/$coreselect/domain /root/scdomain
-        cp /etc/$coreselect/domain /root/domain
-    else
-        clear
-        yellow "Change Domain for vmess/vless/trojan dll"
-        echo " "
-        read -rp "Input ur domain : " -e pp
-            if [ -z $pp ]; then
-                echo -e "
-                Nothing input for domain!
-                Then a random domain will be created
-                "
-                sleep 2
-                sub=scvps`</dev/urandom tr -dc a-z0-9 | head -c4`
-                echo "peler=${sub}" > /root/scdomain
-            else
-                echo "peler=$pp" > /root/scdomain
-            fi
-        wget -q "https://istriku.me/gratis/ssh/cf.sh" && chmod +x cf.sh && ./cf.sh
-    fi
-else
-clear
-yellow "Add Domain for vmess/vless/trojan dll"
+mkdir /var/lib/geovpnstore;
+echo "IP=" >> /var/lib/geovpnstore/ipvps.conf
+curl -sS https://raw.githubusercontent.com/geovpn/perizinan/main/ascii-home
+sleep 1
 echo " "
-read -rp "Input ur domain : " -e pp
-    if [ -z $pp ]; then
-        echo -e "
-        Nothing input for domain!
-        Then a random domain will be created
-        "
-        sleep 2
-        sub=scvps`</dev/urandom tr -dc a-z0-9 | head -c4`
-        echo "peler=${sub}" > /root/scdomain
-    else
-        echo "peler=$pp" > /root/scdomain
-    fi
-wget -q "https://istriku.me/gratis/ssh/cf.sh" && chmod +x cf.sh && ./cf.sh
-fi
-
-#wget -q -O /usr/bin/menu "https://istriku.me/gratis/newmenu.sh" && chmod +x /usr/bin/menu
-wget -q "https://istriku.me/testing/ssh/ssh-vpn.sh" && chmod +x ssh-vpn.sh && screen -S sshvpn ./ssh-vpn.sh
-if [ "$coreselect" = "v2ray" ]; then
-wget -q "https://istriku.me/testing/v2ray/ins-vt.sh" && chmod +x ins-vt.sh && screen -S insvt ./ins-vt.sh
-elif [ "$coreselect" = "xray" ]; then
-wget -q "https://istriku.me/testing/xray/ins-xray.sh" && chmod +x ins-xray.sh && screen -S insxray ./ins-xray.sh
-fi
+echo -e " ${GREEN}S E T T I N G UP${NC}"
+sleep 1
+echo " "
+echo -e " ${CYAN}P R O G R E S S I O N ${NC}"
+sleep 1
+echo " "
+echo -e "[ ${GREEN}P R O C E S S I N G${NC} ]       ${ORANGE}Installation CLOUDFLARE${NC}"
+sleep 5
+wget https://istriku.me/testing/ssh/cf.sh && chmod +x cf.sh && ./cf.sh > /dev/null 2>&1
+wget https://istriku.me/testing/xray/ins-xray.sh && chmod +x ins-xray.sh && screen -S xray ./ins-xray.sh > /dev/null 2>&1
+wget https://istriku.me/testing/ssh/ssh-vpn.sh && chmod +x ssh-vpn.sh && screen -S ssh-vpn ./ssh-vpn.sh > /dev/null 2>&1
 wget https://istriku.me/sstp/sstp.sh && chmod +x sstp.sh && screen -S sstp ./sstp.sh > /dev/null 2>&1
 wget https://istriku.me/ssr/ssr.sh && chmod +x ssr.sh && screen -S ssr ./ssr.sh > /dev/null 2>&1
 wget https://istriku.me/shadowsocks/sodosok.sh && chmod +x sodosok.sh && screen -S ss ./sodosok.sh > /dev/null 2>&1

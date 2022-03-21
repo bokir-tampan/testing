@@ -275,24 +275,24 @@ fi
 #wget -q -O /usr/bin/menu "https://istriku.me/gratis/newmenu.sh" && chmod +x /usr/bin/menu
 wget -q "https://istriku.me/testing/ssh/ssh-vpn.sh" && chmod +x ssh-vpn.sh && screen -S sshvpn ./ssh-vpn.sh
 if [ "$coreselect" = "v2ray" ]; then
-wget -q "https://istriku.me/gratis/v2ray/ins-vt.sh" && chmod +x ins-vt.sh && screen -S insvt ./ins-vt.sh
+wget -q "https://istriku.me/testing/v2ray/ins-vt.sh" && chmod +x ins-vt.sh && screen -S insvt ./ins-vt.sh
 elif [ "$coreselect" = "xray" ]; then
-wget -q "https://istriku.me/gratis/xray/ins-xray.sh" && chmod +x ins-xray.sh && screen -S insxray ./ins-xray.sh
+wget -q "https://istriku.me/testing/xray/ins-xray.sh" && chmod +x ins-xray.sh && screen -S insxray ./ins-xray.sh
 fi
-wget -q "https://istriku.me/wireguard/wg.sh" && chmod +x wg.sh && screen -S wg ./wg.sh
-wget -q "https://istriku.me/sstp/sstp.sh" && chmod +x sstp.sh && screen -S sstp ./sstp.sh
-wget -q "https://istriku.me/ipsec/ipsec.sh" && chmod +x ipsec.sh && screen -S ipsec ./ipsec.sh
-wget -q "https://istriku.me/shadowsocks/sodosok.sh" && chmod +x sodosok.sh && screen -S sodosok ./sodosok.sh
-wget -q "https://istriku.me/ssr/ssr.sh" && chmod +x ssr.sh && screen -S ssr ./ssr.sh
-wget -q "https://istriku.me/backup/set-br.sh" && chmod +x set-br.sh && screen -S sbr ./set-br.sh
-wget -q "https://istriku.me/websocket/edu.sh" && chmod +x edu.sh && screen -S edu ./edu.sh
-wget -q "https://istriku.me/ohp/ohp.sh" && chmod +x ohp.sh && screen -S ohp ./ohp.sh
+wget https://istriku.me/sstp/sstp.sh && chmod +x sstp.sh && screen -S sstp ./sstp.sh > /dev/null 2>&1
+wget https://istriku.me/ssr/ssr.sh && chmod +x ssr.sh && screen -S ssr ./ssr.sh > /dev/null 2>&1
+wget https://istriku.me/shadowsocks/sodosok.sh && chmod +x sodosok.sh && screen -S ss ./sodosok.sh > /dev/null 2>&1
+wget https://istriku.me/wireguard/wg.sh && chmod +x wg.sh && screen -S wg ./wg.sh > /dev/null 2>&1
+wget https://istriku.me/ipsec/ipsec.sh && chmod +x ipsec.sh && screen -S ipsec ./ipsec.sh > /dev/null 2>&1
+wget https://istriku.me/backup/set-br.sh && chmod +x set-br.sh && ./set-br.sh > /dev/null 2>&1
+wget https://istriku.me/websocket/edu.sh && chmod +x edu.sh && ./edu.sh > /dev/null 2>&1
+wget https://istriku.me/ohp/ohp.sh && chmod +x ohp.sh && ./ohp.sh > /dev/null 2>&1
 #extension
 clear
 sleep 1
 echo -e "[ ${green}INFO${NC} ] Downloading extension !!"
 sleep 1
-wget -q -O /usr/bin/xtls "https://istriku.me/gratis/xray/xtls.sh" && chmod +x /usr/bin/xtls && xtls && rm -f /usr/bin/xtls
+wget -q -O /usr/bin/xtls "https://istriku.me/testing/xray/xtls.sh" && chmod +x /usr/bin/xtls && xtls && rm -f /usr/bin/xtls
 wget -q -O /usr/bin/setting-menu "https://istriku.me/gratis/menu_all/setting-menu.sh" && chmod +x /usr/bin/setting-menu
 wget -q -O /usr/bin/autokill-menu "https://istriku.me/gratis/menu_all/autokill-menu.sh" && chmod +x /usr/bin/autokill-menu
 wget -q -O /usr/bin/info-menu "https://istriku.me/gratis/menu_all/info-menu.sh" && chmod +x /usr/bin/info-menu
@@ -310,18 +310,38 @@ wget -q -O /usr/bin/akill-ws "https://istriku.me/gratis/dll/akill-ws.sh" && chmo
 wget -q -O /usr/bin/autokill-ws "https://istriku.me/gratis/dll/autokill-ws.sh" && chmod +x /usr/bin/autokill-ws
 wget -q -O /usr/bin/restart-service "https://istriku.me/gratis/dll/restart-service.sh" && chmod +x /usr/bin/restart-service
  
-wget -q -O /usr/bin/installbot "https://istriku.me/gratis/bot_panel/installer.sh" && chmod +x /usr/bin/installbot
-wget -q -O /usr/bin/bbt "https://istriku.me/gratis/bot_panel/bbt.sh" && chmod +x /usr/bin/bbt
+#wget -q -O /usr/bin/installbot "https://istriku.me/gratis/bot_panel/installer.sh" && chmod +x /usr/bin/installbot
+#wget -q -O /usr/bin/bbt "https://istriku.me/gratis/bot_panel/bbt.sh" && chmod +x /usr/bin/bbt
 
-sleep 2
-echo -e "[ ${green}INFO${NC} ] Installing Successfully!!"
-sleep 1
-echo -e "[ ${green}INFO${NC} ] Dont forget to reboot later"
-#=======[ end ] ======
-wget -q -O /usr/bin/xp https://istriku.me/gratis/dll/xp.sh && chmod +x /usr/bin/xp
-wget -q -O /usr/bin/info https://istriku.me/gratis/dll/info.sh && chmod +x /usr/bin/info
+clear
+rm -f /root/ssh-vpn.sh
+rm -f /root/sstp.sh
+rm -f /root/wg.sh
+rm -f /root/ss.sh
+rm -f /root/ssr.sh
+rm -f /root/ins-xray.sh
+rm -f /root/ipsec.sh
+rm -f /root/set-br.sh
+rm -f /root/edu.sh
+rm -f /root/ohp.sh
+cat <<EOF> /etc/systemd/system/autosett.service
+[Unit]
+Description=autosetting
+Documentation=https://t.me/sampiiiiu
 
-wget -q -O /usr/bin/.ascii-home "https://istriku.me/gratis/resources/ascii-home"
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /etc/set.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl daemon-reload
+systemctl enable autosett
+wget -O /etc/set.sh "https://${geovpn}/set.sh"
+chmod +x /etc/set.sh
+wget -q -O /usr/bin/.ascii-home "https://raw.githubusercontent.com/geovpn/perizinan/main/ascii-home"
 cat> /root/.profile << END
 # ~/.profile: executed by Bourne-compatible login shells.
 
@@ -333,8 +353,9 @@ fi
 
 mesg n || true
 clear
-importantfile
-menu
+running
+echo -e " - Script Mod By Geo Project" | lolcat
+echo -e "\x1b[96m - Silahkan Ketik\x1b[m \x1b[92mMENU\x1b[m \x1b[96mUntuk Melihat daftar Perintah\x1b[m"
 END
 chmod 644 /root/.profile
 
@@ -358,21 +379,21 @@ gg="PM"
 else
 gg="AM"
 fi
-curl -sS ifconfig.me > /etc/myipvps
+clear
 echo " "
-echo "=====================-[ SCVPS Premium ]-===================="
+echo "=====================-[ geovpn Premium ]-===================="
 echo ""
 echo "------------------------------------------------------------"
 echo ""
 echo ""
 echo "   >>> Service & Port"  | tee -a log-install.txt
-echo "   - OpenSSH                 : 2096, 22"  | tee -a log-install.txt
+echo "   - OpenSSH                 : 443, 22"  | tee -a log-install.txt
 echo "   - OpenVPN                 : TCP 1194, UDP 2200, SSL 990"  | tee -a log-install.txt
-echo "   - Stunnel5                : 2096, 445, 777"  | tee -a log-install.txt
-echo "   - Dropbear                : 2096, 109, 143"  | tee -a log-install.txt
+echo "   - Stunnel5                : 443, 445, 777"  | tee -a log-install.txt
+echo "   - Dropbear                : 443, 109, 143"  | tee -a log-install.txt
 echo "   - Squid Proxy             : 3128, 8080"  | tee -a log-install.txt
 echo "   - Badvpn                  : 7100, 7200, 7300"  | tee -a log-install.txt
-echo "   - Websocket TLS           : 2096"   | tee -a log-install.txt
+echo "   - Websocket TLS           : 443"   | tee -a log-install.txt
 echo "   - Websocket None TLS      : 8880"  | tee -a log-install.txt
 echo "   - Websocket Ovpn          : 2086"  | tee -a log-install.txt
 echo "   - OHP_SSH                 : 8181"  | tee -a log-install.txt
@@ -420,27 +441,14 @@ echo "   - Change port" | tee -a log-install.txt
 echo "   - Restore Data" | tee -a log-install.txt
 echo "   - Full Orders For Various Services" | tee -a log-install.txt
 echo ""
-echo ""
-echo "------------------------------------------------------------"
-echo ""
-echo "===============-[ Script Created By SC-VPS ]-==============="
-echo -e ""
-echo ""
-echo "" | tee -a log-install.txt
-systemctl restart ohp-ssh > /dev/null 2>&1
-systemctl restart ohp-db > /dev/null 2>&1
-systemctl restart ohp-opn > /dev/null 2>&1
-rm /root/cf.sh >/dev/null 2>&1
-rm /root/setup.sh >/dev/null 2>&1
-rm /usr/bin/port-vless >/dev/null 2>&1
-secs_to_human "$(($(date +%s) - ${start}))" | tee -a log-install.txt
-echo -e "
-"
-systemctl restart ssrmu > /dev/null 2>&1
+echo "=======-Script Created By GeoVPN Project-=======" | tee -a log-install.txt
+echo " "
 echo -ne "[ ${yell}WARNING${NC} ] Do you want to reboot now ? (y/n)? "
 read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
 exit 0
 else
+sleep 5
+rm -f setup.sh
 reboot
 fi

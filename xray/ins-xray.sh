@@ -98,21 +98,24 @@ touch /etc/trojan-go/akun.conf >/dev/null 2>&1
 # install xray
 sleep 1
 echo -e "[ ${green}INFO$NC ] Downloading & Installing xray core"
-wget -q "https://istriku.me/testing/core/xray-core.sh" && chmod +x xray-core.sh && ./xray-core.sh >/dev/null 2>&1
+wget -q "https://istriku.me/gratis/core/xray-core.sh" && chmod +x xray-core.sh && ./xray-core.sh >/dev/null 2>&1
 rm -f xray-core.sh
 sleep 1
 echo -e "[ ${green}INFO$NC ] Downloading & Installing Trojan-Go"
 wget -q "https://istriku.me/testing/trojan/ins-trojango.sh" && chmod +x ins-trojango.sh && ./ins-trojango.sh
 rm -f /root/ins-trojango.sh
-mkdir -p /root/.acme.sh >/dev/null 2>&1
-sleep 1
-if [ -f "/etc/xray/domain" ]; then
-echo -e "[ ${green}INFO$NC ] Current domain for acme : $domain"
-else
-echo -e "[ ${green}INFO$NC ] Getting acme for cert"
-curl https://get.acme.sh | sh -s email=my@example.com
-/root/.acme.sh/acme.sh --issue -d $domain --debug --standalone --keylength ec-256
-#/root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
+# Make Folder XRay
+mkdir -p /var/log/xray/
+
+sudo lsof -t -i tcp:80 -s tcp:listen | sudo xargs kill
+cd /root/
+wget https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh
+bash acme.sh --install
+rm acme.sh
+cd .acme.sh
+bash acme.sh --register-account -m djarumpentol01@gmail.com
+bash acme.sh --issue --standalone -d $domain --force
+bash acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key
 fi
 service squid start >/dev/null 2>&1
 cat /proc/sys/kernel/random/uuid > /etc/xray/idvmesstls
